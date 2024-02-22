@@ -1,28 +1,24 @@
 import ReactSwitch from "react-switch";
-import { useTheme } from "styled-components";
+import { useTheme } from "../../shared/hooks/useTheme";
 
 import { Container } from "./styles";
 
-interface IHeaderProps {
-  toogleTheme: () => void;
-}
-
-export const Header:React.FC<IHeaderProps> = ({ toogleTheme }) => {
-  const theme = useTheme();
+export const Header:React.FC = () => {
+  const themes = useTheme();
 
   return (
     <Container>
       Hello World!
       <ReactSwitch
-        onChange={toogleTheme}
-        checked={theme.title === "dark"}
+        onChange={themes.toggleTheme}
+        checked={themes.theme.title === "dark"}
         uncheckedIcon={false}
         checkedIcon={false}
         height={15}
         width={40}
         handleDiameter={20}
-        offColor={`${theme.colors.primary}66`}
-        onColor={theme.colors.secondary}
+        offColor={`${themes.theme.colors.secondary}`}
+        onColor={themes.theme.colors.tertiary}
       />
     </Container>
   );

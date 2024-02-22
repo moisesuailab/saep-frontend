@@ -1,23 +1,19 @@
-import { ThemeProvider, DefaultTheme } from "styled-components";
-import usePersistedState from "./shared/hooks/usePersistedState";
-
-import themes from "./styles/themes";
+import { AuthProvider } from "./shared/contexts/AuthContext";
+import { BrowserRouter } from "react-router-dom";
+import { MainRoutes } from "./routes";
 
 import { GlobalStyles } from "./styles/global";
-import { Header } from "./components/Header";
+import { CustomThemeProvider } from "./shared/contexts/ThemeContext";
 
 export const App = () => {
-  const [theme, setTheme] = usePersistedState<DefaultTheme>('theme', themes.light);
-  const toogleTheme = () => {
-    setTheme(theme.title === "dark" ? themes.light : themes.dark);
-  };
-
   return (
-    <ThemeProvider theme={theme}>
-      <div className="App">
-        <GlobalStyles />
-        <Header  toogleTheme={toogleTheme} />
-      </div>
-    </ThemeProvider>
+    <AuthProvider>
+      <CustomThemeProvider>
+        <BrowserRouter>
+          <GlobalStyles />          
+          <MainRoutes />
+        </BrowserRouter>
+      </CustomThemeProvider>
+    </AuthProvider>
   );
 };
