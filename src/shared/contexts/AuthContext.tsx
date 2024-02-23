@@ -15,7 +15,7 @@ export const AuthProvider = ({children}: IAuthProvider) => {
         }
     }, []);
 
-    async function authenticate (email: string, password: string) {
+    async function signin (email: string, password: string) {
         const response = await LoginRequest(email, password);
 
         const payload = {token: response.token, email}
@@ -25,13 +25,13 @@ export const AuthProvider = ({children}: IAuthProvider) => {
         setUserLocalStorage(payload);
     }
 
-    function logout () {
+    function signout () {
         setUser(null)
         setUserLocalStorage(null);
     }
 
     return (
-        <AuthContext.Provider value={{...user, authenticate, logout}}>
+        <AuthContext.Provider value={{...user, signin, signout, signed: !!user}}>
             {children}
         </AuthContext.Provider>
     )
